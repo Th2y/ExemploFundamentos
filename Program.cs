@@ -1,5 +1,5 @@
 ﻿using ExemploFundamentos.Models;
-
+using Newtonsoft.Json;
 using System;
 
 /*double x = 30.0;
@@ -62,5 +62,27 @@ else{
     Console.WriteLine("Error on file reader");
 }*/
 
-Sale sale1 = new(1, "Book", 25.00M);
-Sale sale2 = new(2, "Pen", 1.00M);
+/*DateTime actualDate = DateTime.Now;
+
+List<Sale> sales = [];
+
+Sale sale1 = new(1, "Book", 25.00M, actualDate);
+Sale sale2 = new(2, "Pen", 1.00M, actualDate);
+
+sales.Add(sale1);
+sales.Add(sale2);
+
+string serialized = JsonConvert.SerializeObject(sales, Formatting.Indented);
+
+File.WriteAllText("Files/Sales.json", serialized);
+
+Console.WriteLine(serialized);*/
+
+string content = File.ReadAllText("Files/Sales.json");
+
+List<Sale> sales = JsonConvert.DeserializeObject<List<Sale>>(content);
+
+foreach(Sale sale in sales){
+    Console.WriteLine(
+        $"ID: {sale.ID}, Product: {sale.Product}, Price: {sale.Price}, Date: {sale.SaleDate:dd/MM/yyyy HH:mm}");
+}
